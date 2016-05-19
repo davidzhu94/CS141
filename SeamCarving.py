@@ -61,7 +61,7 @@ def Create_Table(holder):
 
 def Write_to_File(s):
     inputName = sys.argv[1][:len(sys.argv[1])-4]
-    filename = inputName + '_trace1.txt'
+    filename = inputName + '_trace.txt'
     output = open(filename ,'w')
     output.write("Min Seam: ")
     output.write(str(table[len(table)-1][seam]))
