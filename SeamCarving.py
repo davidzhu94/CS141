@@ -1,5 +1,8 @@
 import sys
 
+table = []
+seam = 0
+
 def Read_File():
     holder = []
     number_of_args = len(sys.argv)
@@ -12,7 +15,6 @@ def Read_File():
     return holder
 
 def Create_Table(holder):
-    table = []
     table.append(holder[0])
     print float(holder[0][len(holder[0])-1]) + float(holder[0][len(holder[0])-1])
     i = 1
@@ -29,15 +31,41 @@ def Create_Table(holder):
     for i in range(len(table)):
         if float(table[len(table)-1][i]) < thing:
             thing = table[len(table)-1][i]
-    print thing
-
-def Find_Trace():
-
-Create_Table(Read_File())
+            global seam
+            seam = i
+    winner = seam
+    trace = [[len(table)-1, winner, float(holder[len(table)-1][winner])]]
+    for i in range(len(table)-2, -1, -1):
+        if winner == 0:
+            if float(holder[i][winner]) < float(holder[i][winner+1]):
+                trace.append([i, winner, float(holder[i][winner])])
+            if float(holder[i][winner+1]) < float(holder[i][winner]):
+                winner += 1
+                trace.append([i, winner, float(holder[i][winner])])
+        elif winner == len(table[winner])-1:
+            if float(holder[i][winner]) < float(holder[i][winner-1]):
+                trace.append([i, winner, float(holder[i][winner])])
+            if float(holder[i][winner-1]) < float(holder[i][winner]):
+                winner -= 1
+                trace.append([i, winner, float(holder[i][winner])])
+        else:
+            if float(holder[i][winner]) < float(holder[i][winner+1]) and float(holder[i][winner]) < float(holder[i][winner-1]):
+                trace.append([i, winner, float(holder[i][winner])])
+            if float(holder[i][winner+1]) < float(holder[i][winner]) and float(holder[i][winner+1]) < float(holder[i][winner-1]):
+                winner += 1
+                trace.append([i, winner, float(holder[i][winner])])
+            if float(holder[i][winner-1]) < float(holder[i][winner]) and float(holder[i][winner-1]) < float(holder[i][winner+1]):
+                winner -= 1
+                trace.append([i, winner, float(holder[i][winner])])
+    return trace
 
 def Write_to_File(s):
     inputName = sys.argv[1][:len(sys.argv[1])-4]
-    filename = inputName + '_distance.txt'
+    filename = inputName + '_trace1.txt'
     output = open(filename ,'w')
+    output.write("Min Seam: ")
+    output.write(str(table[len(table)-1][seam]))
     output.write(str(s))
     output.write('\n')
+
+Write_to_File(Create_Table(Read_File()))
