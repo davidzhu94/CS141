@@ -65,7 +65,9 @@ def Write_to_File(s):
     output = open(filename ,'w')
     output.write("Min Seam: ")
     output.write(str(table[len(table)-1][seam]))
-    output.write(str(s))
     output.write('\n')
+    for i in range(0, len(table)):
+        output.write(str(s[i]))
+        output.write('\n')
 
 Write_to_File(Create_Table(Read_File()))
