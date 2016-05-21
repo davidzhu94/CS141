@@ -1,5 +1,6 @@
 from PIL import Image
-myimage = Image.open("test.png")
+include sys
+myimage = Image.open(sys.argv[0])
 myimage.load()
 print myimage.size, myimage.mode
 a = myimage.getpixel((2,1))
