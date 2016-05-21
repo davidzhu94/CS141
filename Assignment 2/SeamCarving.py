@@ -3,8 +3,10 @@ import sys
 table = []
 seam = 0
 
+holder = []
+
 def Read_File():
-    holder = []
+    #holder = []
     number_of_args = len(sys.argv)
     file = open(sys.argv[1], "r")
     index = 0
@@ -12,6 +14,7 @@ def Read_File():
         line1 = line.split(", ")
         holder.append(line1)
         index += 1
+    print holder
     return holder
 
 def Create_Table(holder):
